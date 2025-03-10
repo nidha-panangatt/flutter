@@ -97,18 +97,18 @@ class _GateScreenState extends State<GateScreen> {
                     ),
                     elevation: 3,
                     child: ListTile(
-                      title: Text("Date: ${DateTime.parse(data['date']).toLocal().toShortDateString()}") ,
+                       title: Text("Date: ${DateTime.parse(data['entrydate']??'')}") ,
                       subtitle: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                         
-                          Text("Entry : ${DateTime.parse(data['entrytime']).toLocal().toString().substring(11,19)}"),
-                          Text("Exit : ${DateTime.parse(data['exittime']).toLocal().toString().substring(11,19)}"),
+                         if(data['entrytime']!=null)
+                         Text("Entry : ${DateTime.parse(data['entrytime']??'')}" ),
+                          if(data['exittime']!=null)
+                         Text("Exit : ${DateTime.parse(data['exittime']??'')}"),
                         ],
-                      ),
+                      ),//
                     ),
-                  );
-                },
+              );},
               ),
             ),
           ],
@@ -202,7 +202,7 @@ class _GateScreenState extends State<GateScreen> {
                         if (fromDate != null && toDate != null) {
                           setState(() {
                             filteredData = widget.labdata.where((data) {
-                              final date = DateTime.parse(data['date']).toLocal();
+                              final date = DateTime.parse(data['etydate']).toLocal();
                               return date.isAfter(fromDate!) &&
                                   date.isBefore(toDate!);
                             }).toList();

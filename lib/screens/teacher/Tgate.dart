@@ -110,33 +110,34 @@ class _TGateScreenState extends State<TGateScreen> {
             ),
             const SizedBox(height: 20,),
 
-             Expanded(
-                child: ListView.builder(
-              itemCount: widget.gatedata.length,
-              itemBuilder: (context, index) {
-                return Card(
-                  child: ListTile(
-                    title: Text('Date: ${widget.gatedata[index]['date']
-                        .toString()
-                        .substring(0, 10)}'),
-                    subtitle: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text('Entry: ${widget.gatedata[index]['entrytime']
-                            .toString()
-                            .substring(11, 19)}'),
-                        Text('Exit: ${widget.gatedata[index]['exittime']
-                            .toString()
-                            .substring(11, 19)}'),
-                        // Text(
-                        //     'Period: ${widget.gatedata[index]['period'].toString()}'),
-                        // Text('Lab: ${widget.gatedata[index]['LAB'].toString()}'),
-                      ],
-                    ),
-                  ),
-                );
-              },
-            ))
+            Expanded(
+  child: SingleChildScrollView(
+    scrollDirection: Axis.horizontal, // Enables horizontal scrolling if needed
+    child: DataTable(
+      columns: [
+        DataColumn(label: Text('Date')),
+        DataColumn(label: Text('Entry Time')),
+        DataColumn(label: Text('Exit Time')),
+      ],
+      rows: widget.gatedata.map<DataRow>((data) {
+        return DataRow(cells: [
+          DataCell(Text(data['entrydate'].toString().substring(0, 10))),
+          DataCell(
+            data['entrytime'] != null
+                ? Text(data['entrytime'].toString().substring(11, 19))
+                : Text('-'), // Show '-' if null
+          ),
+          DataCell(
+            data['exittime'] != null
+                ? Text(data['exittime'].toString().substring(11, 19))
+                : Text('-'), // Show '-' if null
+          ),
+        ]);
+      }).toList(),
+    ),
+  ),
+)
+
           ],
         ),
       ),

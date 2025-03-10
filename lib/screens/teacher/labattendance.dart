@@ -172,33 +172,45 @@ class _LabAttendanceScreenState extends State<LabAttendanceScreen> {
               ],
             ),
             const SizedBox(height: 20,),
-            Expanded(
-                child: ListView.builder(
-              itemCount: widget.labdata.length,
-              itemBuilder: (context, index) {
-                return Card(
-                  child: ListTile(
-                    title: Text('Date: ${widget.labdata[index]['entrytime']
-                        .toString()
-                        .substring(0, 10)}'),
-                    subtitle: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text('Entry: ${widget.labdata[index]['entrytime']
-                            .toString()
-                            .substring(11, 19)}'),
-                        Text('Exit: ${widget.labdata[index]['exittime']
-                            .toString()
-                            .substring(11, 19)}'),
-                        Text(
-                            'Period: ${widget.labdata[index]['period'].toString()}'),
-                        Text('Lab: ${widget.labdata[index]['LAB'].toString()}'),
-                      ],
-                    ),
-                  ),
-                );
-              },
-            ))
+         Expanded(
+  child: SingleChildScrollView(
+    scrollDirection: Axis.horizontal,
+    child: DataTable(
+      columns: [
+        DataColumn(label: Text('Name')),
+        DataColumn(label: Text('Department')),
+        DataColumn(label: Text('Semester')),
+        DataColumn(label: Text('Date')),
+        DataColumn(label: Text('Entry Time')),
+        DataColumn(label: Text('Exit Time')),
+        DataColumn(label: Text('Period')),
+        DataColumn(label: Text('Lab')),
+      ],
+      rows: widget.labdata
+          .where((data) =>
+              (selectedDepartment == null ||
+                  data['studentdepartment'] == selectedDepartment) &&
+              (selectedSemester == null ||
+                  data['studentsem'].toString() == selectedSemester))
+          .map<DataRow>((data) {
+        return DataRow(cells: [
+          DataCell(Text(data['studentname'].toString())),
+          DataCell(Text(data['studentdepartment'].toString())),
+          DataCell(Text(data['studentsem'].toString())),
+          DataCell(Text(data['entrytime'].toString().substring(0, 10))),
+          DataCell(Text(data['entrytime'].toString().substring(11, 19))),
+          DataCell(Text(data['exittime'] != null
+              ? data['exittime'].toString().substring(11, 19)
+              : 'N/A')),
+          DataCell(Text(data['period']?.toString() ?? 'N/A')),
+          DataCell(Text(data['LAB'].toString())),
+        ]);
+      }).toList(),
+    ),
+  ),
+),
+
+
           ],
         ),
       ),

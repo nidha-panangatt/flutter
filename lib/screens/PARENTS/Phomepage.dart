@@ -184,7 +184,7 @@ class HomeScreen extends StatelessWidget {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      parentprofileData['students'][0]['Name']??'no name',
+                                      parentprofileData['students'].first ['Name']??'no name',
                                       style: const TextStyle(
                                         color: Colors.black,
                                         fontSize: 18,

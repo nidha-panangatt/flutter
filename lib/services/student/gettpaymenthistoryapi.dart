@@ -10,7 +10,7 @@ final dio = Dio();
 
 Future<List<Map<String, dynamic>>> getpaymenthistoryAPI(id) async {
   try {
-    Response response = await dio.get('$baseurl/paymenthistory/$id', );
+    Response response = await dio.get('$baseurl/paymenthistory1/$id', );
     print(response);
     print(response.statusCode);
     if (response.statusCode == 200) {

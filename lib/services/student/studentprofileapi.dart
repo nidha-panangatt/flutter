@@ -16,6 +16,7 @@ Future<Map<String, dynamic>> studentprofileAPI() async {
       '$baseurl/studentprofile/$lid',
     );
     print(response);
+    print('tfjhgk');
     // print(response.statusCode);
     if (response.statusCode == 200) {
       print("success");

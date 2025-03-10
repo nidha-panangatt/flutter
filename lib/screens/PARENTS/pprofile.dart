@@ -2,6 +2,10 @@ import 'package:flutter/material.dart';
 // import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 
+import 'package:smart_tracking/services/loginapi.dart';
+import 'package:smart_tracking/services/student/getstudentprofileapi.dart';
+import 'package:smart_tracking/services/student/studentprofileapi.dart';
+
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
 
@@ -53,7 +57,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           radius: 60,
                           backgroundImage: _imageFile != null
                               ? FileImage(_imageFile!)
-                              : const NetworkImage('https://via.placeholder.com/150')
+                              :  NetworkImage('$imageurl${studentprofileData['student_image']}')
                                   as ImageProvider,
                         ),
                         // Positioned(
@@ -98,12 +102,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       ],
                     ),
                     const SizedBox(height: 16),
-                    const Text(
-                      'RIHAM K',
+                     Text(
+                      '${studentprofileData['Name']}',
                       style:
                           TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                     ),
-                    const Text('Admission No: 9049'),
+                     Text('Admission No: ${studentprofileData['admissionno']}'),
                   ],
                 ),
               ),
@@ -112,15 +116,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
               // Personal Information Section
               _buildSectionHeader('Personal Information'),
-              _buildInfoField('Department', 'BSc Computer Science'),
-              _buildInfoField('Semester', '5th'),
-              _buildInfoField('Email ID', 'riham.k@gmail.com'),
-              _buildInfoField('Date of Birth', '12-02-2004'),
-              _buildInfoField('Phone No', '+91 9876543210'),
-              _buildInfoField('Guardian', 'Mr. Kader'),
-              _buildInfoField('Guardian Phone No', '+91 9876543211'),
-              _buildInfoField('Address', '123, Green Street'),
-              _buildInfoField('Place', 'Kochi'),
+              _buildInfoField('Department', '${studentprofileData['department']??"Not Available"}'),
+              _buildInfoField('Semester', '${studentprofileData['sem']?? "Not Available"}'),
+              _buildInfoField('Email ID', '${studentprofileData['email']?? "Not Available"}'),
+              _buildInfoField('Date of Birth', '${studentprofileData['dob']?? "Not Available"}'),
+              _buildInfoField('Phone No',  '${studentprofileData['ph_no']?? "+91 9876543210"}'),
+              _buildInfoField('Guardian', '${studentprofileData['guardianname']?? " Mr. Kader"}'),
+              _buildInfoField('Guardian Phone No', '${studentprofileData['phoneno']?? "+91 9876543210"}'),
+              _buildInfoField('Address',  '${studentprofileData['address']?? '123, XYZ Street, ABC Colony, PQR City'}'),
+              _buildInfoField('Place', '${studentprofileData['place']?? "Kochi"}'),
               const Divider(thickness: 1),
 
               // Commuter Information Section

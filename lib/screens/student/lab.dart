@@ -143,7 +143,9 @@ class _LabScreenState extends State<LabScreen> {
                     subtitle: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
+                        if(widget.labdata[index]['entrytime']!=null)
                         Text('Entry: ${widget.labdata[index]['entrytime'].toString().substring(11,19)}'),
+                        if(widget.labdata[index]['exittime']!=null)
                         Text('Exit: x${widget.labdata[index]['exittime'].toString().substring(11,19)}'),
                       ],
                     )),

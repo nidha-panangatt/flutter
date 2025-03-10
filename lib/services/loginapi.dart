@@ -10,8 +10,8 @@ import 'package:smart_tracking/services/student/getnotificationapi.dart';
 import 'package:smart_tracking/services/student/studentprofileapi.dart';
 import 'package:smart_tracking/services/teacher/teacherprofileapi.dart';
 
-String baseurl = 'http://192.168.1.122:8000/administrator';
-String imageurl='http://192.168.1.122:8000';
+String baseurl = 'http://192.168.99.244:5000/administrator';
+String imageurl='http://192.168.99.244:5000';
 int? lid;
 String? userType;  
 String? loginStatus;

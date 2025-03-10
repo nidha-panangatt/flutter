@@ -20,15 +20,15 @@ class HomeScreenPage extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreenPage> {
-List<Map<String, dynamic>> attendanceData = [];
+Map<String, dynamic> attendanceData = {};
   Future<void> fetchAttendanceData() async {
     try {
-      var response = await Dio().get('$baseurl/administrator/viewattendance/$lid');
+      var response = await Dio().get('$baseurl/viewattendance/$lid');
       print(response.data);
       if (response.statusCode == 200) {
         setState(() {
           // Process and store attendance data
-          attendanceData = List<Map<String, dynamic>>.from(response.data);
+          attendanceData = response.data;
         });
       } else {
         // Handle error
@@ -90,12 +90,12 @@ List<Map<String, dynamic>> attendanceData = [];
                         child: ListTile(
                           trailing: const Icon(Icons.location_on),
                           title: const Text('Location'),
-                          leading: const CircleAvatar(),
+                          // leading: const CircleAvatar(),
                           onTap: () async {
-                            List<Map<String, dynamic>> locationData =
+                          Map<String, dynamic> locationData =
                                 await getlocationAPI();
                             await launchUrl(Uri.parse(
-                                'https://www.google.com/maps?q=37.7749,-122.4194'));
+                                'https://www.google.com/maps?q=${locationData['latitude']},${locationData['longitude']}'));
                           },
                         ),
                       ),
@@ -111,37 +111,73 @@ List<Map<String, dynamic>> attendanceData = [];
                       ),
                       const SizedBox(height: 8),
 
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Row(
-                          children: [
-                            const CircleAvatar(),
-                            Expanded(
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceEvenly,
-                                    children: [
-                                      ListView.builder(itemBuilder: 
-                                      (context, index) {
-                                        return CircleAvatar(
-                                          radius: 20,
-                                          child: Text("${attendanceData[index]['status']}"),
-                                        );
-                                      }
-                                      , itemCount: attendanceData.length, shrinkWrap: true, physics: const NeverScrollableScrollPhysics(),),
-                                    ],
-                                // children: List.generate(6, (index) {
-                                //   return CircleAvatar(
-                                //     radius: 20,
-                                //     child: Text("${index + 1} hr"),
-                                //   );
-                                // }),
-                              ),
-                            ),
-                            const CircleAvatar(),
-                          ],
-                        ),
-                      ),
+    
+
+
+
+
+
+Column(
+  crossAxisAlignment: CrossAxisAlignment.start,
+  children: attendanceData.entries.map((entry) {
+    String categoryName = entry.key.replaceAll("_", " ").toUpperCase(); // Convert to readable format
+    List<Map<String, dynamic>> records = entry.value.cast<Map<String, dynamic>>(); // Ensure type safety
+
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 8.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          // Category Title
+          Padding(
+            padding: const EdgeInsets.only(left: 8.0),
+            child: Text(
+              categoryName,
+              style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+            ),
+          ),
+          
+          // Horizontal List of Attendance Status
+          SizedBox(
+            height: 50, // Ensuring proper height
+            child: ListView.builder(
+              scrollDirection: Axis.horizontal,
+              itemCount: records.length,
+              itemBuilder: (context, index) {
+                String status = records[index]['status'] ?? 'NO';
+                
+                // Assign colors based on status
+                Color statusColor;
+                if (status.toLowerCase() == 'in') {
+                  statusColor = Colors.green;
+                } else if (status.toLowerCase() == 'out') {
+                  statusColor = Colors.red;
+                } else {
+                  statusColor = Colors.grey; // Default for unknown status
+                }
+
+                return Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 4.0),
+                  child: CircleAvatar(
+                    radius: 20,
+                    backgroundColor: statusColor,
+                    child: Text(
+                      '${records[index]['entrytime']}'.toString().substring( 11,16),
+                      style: const TextStyle(color: Colors.white,fontSize: 12 ),
+                    ),
+                  ),
+                );
+              },
+            ),
+          ),
+        ],
+      ),
+    );
+  }).toList(),
+)
+
+
+
                     ],
                   ),
 
@@ -265,7 +301,7 @@ List<Map<String, dynamic>> attendanceData = [];
                             ),
                             const SizedBox(height: 2),
                             Text(
-                              "Register No: ${studentprofileData['admissionno']}",
+                              "Admission No: ${studentprofileData['admissionno']}" ?? 'no register no',
                               style: const TextStyle(fontSize: 14),
                             ),
                           ],

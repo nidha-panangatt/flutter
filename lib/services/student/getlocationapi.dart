@@ -8,22 +8,22 @@ import 'package:smart_tracking/services/loginapi.dart';
 
 final dio = Dio();
 
-Future<List<Map<String, dynamic>>> getlocationAPI() async {
+Future<Map<String, dynamic>> getlocationAPI() async {
   try {
-    Response response = await dio.get('$baseurl/buslocation/$lid', );
+    Response response = await dio.get('$baseurl/last-bus-location/$lid', );
     print(response);
     print(response.statusCode);
     if (response.statusCode == 200) {
       print("success");
-      List<dynamic> products = response.data;
-      List<Map<String, dynamic>> listdata =
-          List<Map<String, dynamic>>.from(products);
-      return listdata;
+      // List<dynamic> products = response.data;
+      // List<Map<String, dynamic>> listdata =
+      //     List<Map<String, dynamic>>.from(products);
+      return response.data;
     } else {
-      return [];
+      return {};
     }
   } catch (e) {
     print(e.toString());
-    return[];
+    return{};
 }
 }

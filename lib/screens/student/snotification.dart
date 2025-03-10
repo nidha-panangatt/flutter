@@ -117,7 +117,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                           //   color: Colors.blue,
                           // ),
                           leading: const Icon(Icons.notifications_active),
-                          title: Text(notification["notification"]!),
+                          title: Text(notification["message"] ?? 'unknown'),
                           subtitle: Text(notification["date"].toString().substring(0,10)),
                         ),
                       );

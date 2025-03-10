@@ -1,6 +1,4 @@
-//api post
 
-//api post
 
 
 import 'package:dio/dio.dart';
@@ -11,7 +9,7 @@ final dio = Dio();
 Future<List<Map<String, dynamic>>> getfeesdueAPI(id) async {
   try {
     Response response = await dio.get('$baseurl/studentnotification/$id', );
-    print(response);
+    print("eeeee$response");
     print(response.statusCode);
     if (response.statusCode == 200) {
       print("success--------->$response");

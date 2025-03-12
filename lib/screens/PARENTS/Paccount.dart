@@ -61,7 +61,7 @@ class _AccountState extends State<PAccount> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          "${parentprofileData['Name'] ?? 'no data'}",
+                          "${parentprofileData['guardianname'] ?? 'no data'}",
                           style: const TextStyle(
                             fontSize: 20,
                             fontWeight: FontWeight.bold,
@@ -76,6 +76,7 @@ class _AccountState extends State<PAccount> {
                             color: Colors.white, // White text color
                           ),
                         ),
+                        if(parentprofileData['students']!=null)
                         Text(
                           "${parentprofileData['students'][0]['email'] ?? 'no data'}",
                           style: const TextStyle(

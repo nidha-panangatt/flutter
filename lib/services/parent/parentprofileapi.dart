@@ -15,14 +15,14 @@ Future<Map<String, dynamic>> parentprofileAPI() async {
     Response response = await dio.get(
       '$baseurl/parentprofile/$lid',
     );
-    print(response);
+    print("eeeee$response");
     print(response.statusCode);
     if (response.statusCode == 200) {
       print("success");
       // List<dynamic> products = response.data;
       // List<Map<String, dynamic>> listdata =
-      //     List<Map<String, dynamic>>.from(products);
-      parentprofileData = response.data;
+       List data=   List<Map<String, dynamic>>.from(response.data['students']);
+      parentprofileData =data[0];
       return response.data;
     } else {
       return {};

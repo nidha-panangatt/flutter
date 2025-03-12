@@ -16,10 +16,10 @@ class _LabAttendanceScreenState extends State<LabAttendanceScreen> {
   DateTime? toDate;
 
   final List<String> departments = [
-    'Computer Science',
-    'Botany',
-    'Chemistry',
-    'Home Science'
+    ' bsc Computer Science',
+    ' bsc Botany',
+    ' bsc Chemistry',
+    ' bsc Home Science'
   ];
   final List<String> semesters = ['1', '2', '3', '4', '5', '6'];
 

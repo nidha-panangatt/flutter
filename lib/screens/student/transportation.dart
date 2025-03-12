@@ -320,7 +320,8 @@ import 'package:smart_tracking/services/student/gettpaymenthistoryapi.dart';
 import 'package:smart_tracking/services/parent/getbusentryapi.dart';
 
 class TransportationScreen extends StatefulWidget {
-  const TransportationScreen({super.key});
+  final id;
+  const TransportationScreen({super.key, this.id});
 
   @override
   _TransportationScreenState createState() => _TransportationScreenState();
@@ -340,13 +341,13 @@ class _TransportationScreenState extends State<TransportationScreen> {
     List<Map<String, dynamic>> fetchedData = [];
 
     if (field == 'Fees Due') {
-      fetchedData = await getfeesdueAPI(lid) ?? [];
+      fetchedData = await getfeesdueAPI(userType == 'parent'?widget.id: lid) ?? [];
     } else if (field == 'Payment History') {
-      fetchedData = await getpaymenthistoryAPI(lid) ?? [];
+      fetchedData = await getpaymenthistoryAPI(userType == 'parent'?widget.id: lid) ?? [];
     } else if (field == 'Entry/Exit') {
-      fetchedData = await getentryAPI(lid) ?? [];
+      fetchedData = await getentryAPI(userType == 'parent'?widget.id: lid) ?? [];
     } else {
-      fetchedData = await getfineAPI(lid) ?? [];
+      fetchedData = await getfineAPI(userType == 'parent'?widget.id: lid) ?? [];
     }
 
     setState(() {

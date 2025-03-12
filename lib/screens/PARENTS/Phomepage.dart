@@ -107,7 +107,7 @@ class HomeScreen extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            parentprofileData['Name']??"no name",
+                            parentprofileData['guardianname']??"no name",
                             style: const TextStyle(
                               color: Colors.white,
                               fontSize: 18,
@@ -180,11 +180,12 @@ class HomeScreen extends StatelessWidget {
                                   ),
                                 ),
                                 const SizedBox(width: 15),
+                                // if(parentprofileData['students']!=null)
                                  Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      parentprofileData['students'].first ['Name']??'no name',
+                                      parentprofileData['Name']??'no name',
                                       style: const TextStyle(
                                         color: Colors.black,
                                         fontSize: 18,
@@ -193,7 +194,7 @@ class HomeScreen extends StatelessWidget {
                                     ),
                                     const SizedBox(height: 5),
                                     Text(
-                                      "Department: ${parentprofileData['students'][0]['department']??'no data'}",
+                                      "Department: ${parentprofileData['department']??'no data'}",
                                       style: const TextStyle(
                                         color: Colors.black54,
                                         fontSize: 14,
@@ -201,7 +202,7 @@ class HomeScreen extends StatelessWidget {
                                     ),
                                     const SizedBox(height: 5),
                                     Text(
-                                      "Adm No:  ${parentprofileData['students'][0]['admissionno']??'no data'}",
+                                      "Adm No:  ${parentprofileData['admissionno']??'no data'}",
                                       style: const TextStyle(
                                         color: Colors.black54,
                                         fontSize: 14,
@@ -225,7 +226,7 @@ class HomeScreen extends StatelessWidget {
                                       Navigator.push(
                                         context,
                                         MaterialPageRoute(
-                                          builder: (context) => const TransportationScreen(),
+                                          builder: (context) =>  TransportationScreen(id: parentprofileData['stlid'],),
                                         ),
                                       );
                                     },
@@ -253,7 +254,7 @@ class HomeScreen extends StatelessWidget {
                                   child: GestureDetector(
                                     onTap: () async{
                                               
-                                      List<Map<String, dynamic>>gateData=await getgateAPI(parentprofileData['students'][0]['id']);
+                                      List<Map<String, dynamic>>gateData=await getgateAPI(parentprofileData['stlid']);
                                       Navigator.push(
                                         context,
                                         MaterialPageRoute(
